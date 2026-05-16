@@ -4,7 +4,7 @@ Este documento define una propuesta de trabajo colaborativo usando **GitFlow** p
 
 ---
 
-## 🎯 Objetivo
+## Objetivo
 
 - Mantener `main` siempre estable y desplegable.
 - Usar `develop` como rama de integración del trabajo diario.
@@ -13,7 +13,7 @@ Este documento define una propuesta de trabajo colaborativo usando **GitFlow** p
 
 ---
 
-## 🌿 Ramas del Repositorio
+## Ramas del Repositorio
 
 ### `main`
 
@@ -71,7 +71,7 @@ Este documento define una propuesta de trabajo colaborativo usando **GitFlow** p
 
 ---
 
-## 🚦 Arranque desde el estado actual (ya hay cambios en `main`)
+## Arranque desde el estado actual (ya hay cambios en `main`)
 
 Como `main` ya tiene cambios, el punto de partida recomendado es:
 
@@ -85,7 +85,7 @@ Esto evita “rehacer historia” y alinea a todo el equipo desde lo que ya est�
 
 ---
 
-## 🧩 Convención de nombres (para 3 devs + aprendices)
+## Convención de nombres (para 3 devs + aprendices)
 
 Se recomienda incluir el responsable al inicio para trazabilidad:
 
@@ -101,7 +101,7 @@ Si prefieren menos largo, pueden omitir el prefijo de usuario y mantener solo `f
 
 ---
 
-## 🔁 Flujo diario (paso a paso)
+## Flujo diario (paso a paso)
 
 1. Crear rama desde `develop`:
    - `feature/*` o `fix/*`
@@ -115,7 +115,7 @@ Si prefieren menos largo, pueden omitir el prefijo de usuario y mantener solo `f
 
 ---
 
-## ✍️ Mensajes de commit (ejemplo)
+## Mensajes de commit (ejemplo)
 
 Se recomienda usar un formato consistente para que el historial sea fácil de leer.
 
@@ -236,7 +236,7 @@ git push origin develop
 
 ---
 
-## ✅ Reglas de Pull Request (PR)
+## Reglas de Pull Request (PR)
 
 ### Revisión
 
@@ -255,7 +255,7 @@ git push origin develop
 
 ---
 
-## 🚀 Flujo de release
+## Flujo de release
 
 1. Cuando `develop` está listo para publicar, crear `release/<version>` desde `develop`.
 2. En `release/*` solo se permiten:
@@ -268,7 +268,7 @@ git push origin develop
 
 ---
 
-## 🧯 Flujo de hotfix (urgente)
+## Flujo de hotfix (urgente)
 
 1. Crear `hotfix/*` desde `main`.
 2. PR `hotfix/*` → `main` (con revisión).
@@ -277,7 +277,7 @@ git push origin develop
 
 ---
 
-## 🧱 Reglas recomendadas de protección de ramas (GitHub/GitLab)
+## Reglas recomendadas de protección de ramas (GitHub/GitLab)
 
 - Proteger `main` y `develop`:
   - requerir PR
