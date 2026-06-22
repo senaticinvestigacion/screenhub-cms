@@ -3,9 +3,8 @@
 import { signIn } from "@/lib/auth-client";
 import { useState } from "react";
 import Link from "next/link";
-import { SocialButtons } from "./SocialButtons";
 
-export const LoginForm = () => {
+export const LoginForm = ({ showSignUp = true }: { showSignUp?: boolean }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,19 +41,6 @@ export const LoginForm = () => {
         <p className="text-muted-foreground">
           Ingresa tus credenciales para acceder a tu cuenta
         </p>
-      </div>
-
-      <SocialButtons />
-
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">
-            O continúa con email
-          </span>
-        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -117,17 +103,19 @@ export const LoginForm = () => {
         </button>
       </form>
 
-      <div className="text-center text-sm">
-        <span className="text-muted-foreground">
-          ¿No tienes una cuenta?{" "}
-        </span>
-        <Link
-          href="/sign-up"
-          className="font-semibold text-foreground hover:underline underline-offset-4"
-        >
-          Regístrate
-        </Link>
-      </div>
+      {showSignUp && (
+        <div className="text-center text-sm">
+          <span className="text-muted-foreground">
+            ¿No tienes una cuenta?{" "}
+          </span>
+          <Link
+            href="/sign-up"
+            className="font-semibold text-foreground hover:underline underline-offset-4"
+          >
+            Regístrate
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

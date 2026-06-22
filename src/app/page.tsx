@@ -7,8 +7,10 @@ import {
   ShieldCheckIcon, 
   ZapIcon
 } from "lucide-react";
+import { hasUsers } from "@/features/auth";
 
-export default function Home() {
+export default async function Home() {
+  const usersExist = await hasUsers();
   return (
     <div className="flex flex-col min-h-screen bg-background selection:bg-primary/20 selection:text-primary">
       {/* Navigation */}
@@ -30,11 +32,13 @@ export default function Home() {
             <Link href="/sign-in">
               <Button variant="ghost" size="sm" className="hidden sm:inline-flex">Iniciar Sesión</Button>
             </Link>
-            <Link href="/sign-up">
-              <Button size="sm" className="rounded-full px-6 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
-                Comenzar Gratis
-              </Button>
-            </Link>
+            {!usersExist && (
+              <Link href="/sign-up">
+                <Button size="sm" className="rounded-full px-6 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+                  Comenzar Gratis
+                </Button>
+              </Link>
+            )}
           </nav>
         </div>
       </header>
@@ -66,11 +70,13 @@ export default function Home() {
                   <ArrowRightIcon className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <Link href="/sign-up">
-                <Button variant="outline" size="lg" className="h-14 px-8 rounded-2xl text-lg font-semibold border-2 hover:bg-muted/50 transition-colors">
-                  Ver Demostración
-                </Button>
-              </Link>
+              {!usersExist && (
+                <Link href="/sign-up">
+                  <Button variant="outline" size="lg" className="h-14 px-8 rounded-2xl text-lg font-semibold border-2 hover:bg-muted/50 transition-colors">
+                    Ver Demostración
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 

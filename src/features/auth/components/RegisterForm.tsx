@@ -3,7 +3,6 @@
 import { signUp } from "@/lib/auth-client";
 import { useState } from "react";
 import Link from "next/link";
-import { SocialButtons } from "./SocialButtons";
 
 export const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -44,19 +43,6 @@ export const RegisterForm = () => {
         <p className="text-muted-foreground">
           Únete a nuestra comunidad hoy mismo
         </p>
-      </div>
-
-      <SocialButtons />
-
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">
-            O regístrate con email
-          </span>
-        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
