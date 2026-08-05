@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Loader2, AlertTriangleIcon } from "lucide-react";
-import { User } from "@/generated/prisma";
+import { Screen } from "@/generated/prisma";
 
 import {
   AlertDialog,
@@ -13,29 +13,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { deleteUserAction } from "../actions/user.actions";
+import { deleteScreenAction } from "../actions/screen.actions";
 import { Button } from "@/components/ui/button";
 
-interface DeleteUserAlertProps {
-  user: User | null;
+interface DeleteScreenAlertProps {
+  screen: Screen | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function DeleteUserAlert({ user, open, onOpenChange }: DeleteUserAlertProps) {
+export function DeleteScreenAlert({ screen, open, onOpenChange }: DeleteScreenAlertProps) {
   const [isPending, setIsPending] = useState(false);
 
   async function handleDelete() {
-    if (!user) return;
+    if (!screen) return;
     
     setIsPending(true);
     try {
-      const res = await deleteUserAction(user.id);
+      const res = await deleteScreenAction(screen.id);
       if (res.success) {
-        toast.success("Usuario eliminado exitosamente");
+        toast.success("Pantalla eliminada exitosamente");
         onOpenChange(false);
       } else {
-        toast.error(res.error || "Hubo un error al eliminar el usuario");
+        toast.error(res.error || "Hubo un error al eliminar la pantalla");
       }
     } catch (error) {
       toast.error("Ocurrió un error inesperado");
@@ -52,10 +52,10 @@ export function DeleteUserAlert({ user, open, onOpenChange }: DeleteUserAlertPro
             <div className="size-8 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-500">
               <AlertTriangleIcon className="size-4" />
             </div>
-            <AlertDialogTitle className="text-xl font-extrabold tracking-tight">¿Eliminar Usuario?</AlertDialogTitle>
+            <AlertDialogTitle className="text-xl font-extrabold tracking-tight">¿Eliminar Pantalla?</AlertDialogTitle>
           </div>
           <AlertDialogDescription className="text-xs text-muted-foreground leading-relaxed">
-            Esta acción no se puede deshacer. Se eliminará permanentemente la cuenta de <strong className="text-foreground">{user?.name}</strong> ({user?.email}) y se removerán todos sus permisos.
+            Se desvinculará la pantalla <strong className="text-foreground">{screen?.name}</strong> de la red. La URL del reproductor cliente dejará de estar disponible.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="pt-3 gap-2">
@@ -64,7 +64,7 @@ export function DeleteUserAlert({ user, open, onOpenChange }: DeleteUserAlertPro
           </Button>
           <Button variant="destructive" className="rounded-xl font-bold" onClick={handleDelete} disabled={isPending}>
             {isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-            Eliminar Cuenta
+            Eliminar Pantalla
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-export type Role = "admin" | "publisher" | "auditor";
+export type Role = "admin" | "publisher";
 
 /**
  * Centralized route protection rules.
@@ -12,9 +12,8 @@ export type Role = "admin" | "publisher" | "auditor";
  */
 export const routePermissions: Record<string, Role[]> = {
   "/admin": ["admin"],
-  "/auditor": ["admin", "auditor"],
   "/publisher": ["admin", "publisher"],
-  "/monitoring": ["admin", "publisher", "auditor"],
+  "/monitoring": ["admin", "publisher"],
   "/screens": ["admin", "publisher"],
 };
 
@@ -33,7 +32,6 @@ export async function proxy(request: NextRequest) {
     if (session) {
       const role = session.user.role;
       if (role === "admin") return NextResponse.redirect(new URL("/admin", request.url));
-      if (role === "auditor") return NextResponse.redirect(new URL("/auditor", request.url));
       if (role === "publisher") return NextResponse.redirect(new URL("/publisher", request.url));
     }
   }
@@ -108,16 +106,12 @@ export async function isPublisher() {
   return session?.user.role === "publisher";
 }
 
-export async function isAuditor() {
-  const session = await getSession();
-  return session?.user.role === "auditor";
-}
+
 
 export const config = {
   matcher: [
     "/",
     "/admin/:path*", 
-    "/auditor/:path*", 
     "/publisher/:path*",
     "/monitoring/:path*",
     "/screens/:path*"

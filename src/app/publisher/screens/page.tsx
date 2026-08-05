@@ -1,27 +1,23 @@
 import { getSession } from "@/proxy";
 import prisma from "@/lib/prisma";
-import { PublisherContentPage } from "@/features/content";
+import { PublisherScreensClientPage } from "@/features/screens";
 
-export default async function PublisherContentRoutePage() {
+export default async function PublisherScreensPage() {
   const session = await getSession();
   if (!session) return null;
 
+  // Query only screens assigned to this specific publisher
   const screens = await prisma.screen.findMany({
     where: {
       publisherId: session.user.id,
     },
     include: {
       publisher: true,
-      contents: {
-        orderBy: {
-          order: "asc",
-        },
-      },
     },
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  return <PublisherContentPage screens={screens} />;
+  return <PublisherScreensClientPage screens={screens} userName={session.user.name || "Publicador"} />;
 }

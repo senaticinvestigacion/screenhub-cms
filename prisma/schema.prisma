@@ -26,6 +26,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  screens       Screen[]
+  createdContents ContentItem[]
 
   @@unique([email])
   @@map("user")
@@ -78,3 +80,45 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+model Screen {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  location    String
+  description String?
+  status      String   @default("active")
+  orientation String   @default("landscape")
+  resolution  String   @default("1920x1080")
+  refreshRate Int      @default(30)
+  publisherId String?
+  publisher   User?    @relation(fields: [publisherId], references: [id], onDelete: SetNull)
+  isLocked    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  contents    ContentItem[]
+
+  @@map("screen")
+}
+
+model ContentItem {
+  id          String   @id @default(cuid())
+  title       String
+  type        String   @default("image") // "image" | "video" | "text" | "web"
+  url         String?
+  body        String?
+  duration           Int      @default(10) // Display time in seconds
+  transition         String   @default("fade") // Framer motion preset
+  transitionDuration Float    @default(1.0) // Transition animation speed in seconds
+  order              Int      @default(0)
+  isActive    Boolean  @default(true)
+  screenId    String
+  screen      Screen   @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("content_item")
+}
+

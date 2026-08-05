@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, SparklesIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -70,29 +69,34 @@ export function CreateUserDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button size="lg" className="rounded-xl px-5 font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all hover:scale-[1.02] active:scale-[0.98]">
           <Plus className="w-4 h-4 mr-2" />
           Crear Usuario
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Crear nuevo usuario</DialogTitle>
-          <DialogDescription>
-            Agrega un nuevo usuario al sistema. Se enviará una notificación a su correo una vez implementado.
+      <DialogContent className="sm:max-w-[440px] rounded-2xl border border-border/80 bg-card/95 backdrop-blur-md shadow-2xl">
+        <DialogHeader className="space-y-2">
+          <div className="flex items-center gap-2">
+            <div className="size-8 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary">
+              <SparklesIcon className="size-4" />
+            </div>
+            <DialogTitle className="text-xl font-extrabold tracking-tight">Crear Nuevo Usuario</DialogTitle>
+          </div>
+          <DialogDescription className="text-xs text-muted-foreground">
+            Agrega una nueva cuenta de acceso a la plataforma con su rol correspondiente.
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nombre completo</FormLabel>
+                  <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Nombre completo</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ej. Juan Pérez" {...field} />
+                    <Input placeholder="Ej. Juan Pérez" className="h-10 rounded-xl border-border/60 focus-visible:ring-primary/40" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,9 +108,9 @@ export function CreateUserDialog() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Correo electrónico</FormLabel>
+                  <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Correo electrónico</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="ejemplo@screenhub.com" {...field} />
+                    <Input type="email" placeholder="ejemplo@screenhub.com" className="h-10 rounded-xl border-border/60 focus-visible:ring-primary/40" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -118,9 +122,9 @@ export function CreateUserDialog() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
+                  <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Contraseña</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Mínimo 8 caracteres" {...field} />
+                    <Input type="password" placeholder="Mínimo 8 caracteres" className="h-10 rounded-xl border-border/60 focus-visible:ring-primary/40" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,17 +136,16 @@ export function CreateUserDialog() {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Rol en el sistema</FormLabel>
+                  <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Rol de Acceso</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-10 rounded-xl border-border/60 focus:ring-primary/40">
                         <SelectValue placeholder="Selecciona un rol" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="admin">Administrador</SelectItem>
-                      <SelectItem value="publisher">Publicador</SelectItem>
-                      <SelectItem value="auditor">Auditor</SelectItem>
+                    <SelectContent className="rounded-xl border border-border/80">
+                      <SelectItem value="admin" className="rounded-lg">Administrador (Acceso Total)</SelectItem>
+                      <SelectItem value="publisher" className="rounded-lg">Publicador (Gestión de Pantallas)</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -151,10 +154,10 @@ export function CreateUserDialog() {
             />
 
             <div className="flex justify-end pt-4 space-x-2">
-              <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isPending}>
+              <Button type="button" variant="outline" className="rounded-xl font-semibold" onClick={() => setOpen(false)} disabled={isPending}>
                 Cancelar
               </Button>
-              <Button type="submit" disabled={isPending}>
+              <Button type="submit" className="rounded-xl font-bold bg-primary text-primary-foreground shadow-md hover:bg-primary/90" disabled={isPending}>
                 {isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 Crear Usuario
               </Button>
